@@ -46,6 +46,10 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
-## Blog:
-O [r-bloggers.com](http://www.r-bloggers.com) é um ótimo site para encontrar tutoriais, posts e várias referências sobre R.
+## References : :
+* [R for Data Science Book](https://r4ds.had.co.nz/data-visualisation.html)
+* [r-bloggers.com](http://www.r-bloggers.com)
+* [Happy git with R](https://happygitwithr.com/rstudio-git-github.html)
+* [RStudio Community](https://community.rstudio.com/)
+
 

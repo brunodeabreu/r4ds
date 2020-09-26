@@ -3,7 +3,7 @@ title: "Estudo R for Data Science - Cap 2"
 author: "Bruno de A. Machado"
 date: "9/20/2020"
 output: html_document
----
+--- 
 
 # Visualização de Dados
 
@@ -292,7 +292,129 @@ ggplot(data = mpg) +
 
 ## Geometric Objects
 
+**geoms** são normalmente conhecidos por tipos de gráficos como bar chart, line chart, , boxplot, scatterplot, etc. Cada um desses tipos de gráficos tem seu proprio `geom` .
+
+```{r}
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+
+```
 
 
+Adicionando `linetype` , com isso o ggplot irá separar os carros em 3 categorias de `drv` :
+
+```{r}
+ggplot(data = mpg) + 
+  geom_smooth(mapping = aes(x = displ, y = hwy , linetype= drv))
+
+```
+
+Podemos adicionar uma camada de `geom` em cima da outra, combinado o gráfico de linhas com o scatterplot
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = drv)) +
+  geom_smooth(mapping = aes(x = displ, y = hwy , linetype= drv, color = drv))
+
+```
+Uma das opções do `geom_smooth` é utilizar as opções de `group` e `color` para plotar variáveis categóricas : 
+
+```{r}
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy))
+              
+ggplot(data = mpg) +
+  geom_smooth(mapping = aes(x = displ, y = hwy, group = drv))
+    
+ggplot(data = mpg) +
+  geom_smooth(
+    mapping = aes(x = displ, y = hwy, color = drv),
+    show.legend = FALSE
+  )
+```
+
+Para evitar que se duplique informação no gráfico adicionando geoms podemos tratar o `mappting` na parte **global** do ggplot
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+
+```
+
+Sobrescrevendo o mapping, neste caso o color para variável class será aplicado somente a camada de scatterplo:
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth()
+
+```
+
+Filtrando os dados para alguma camada de plot : 
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy))+
+  geom_point(mapping = aes(color = class))+
+  geom_smooth(data = filter(mpg, class == 'subcompact'), se = FALSE)
+```
+
+
+--------------------------
+
+#### Exercícios 3.6.1:
+
+
+
+
+**1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?**
+ 
+  **Resposta : ** line chart : geom_line()
+                  boxplot : geom_boxplot()
+                  histogram: geom_histogram()
+                  area chart: geom_area()
+                  
+**Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.**
+
+  **Resposta : ** Na parte global irá criar um gráfico com x e y destacando cores por drv, adicionado um scatterplot e um smooth.  *So depois de rodar que identifiquei que o se=FALSE removeu o intervalo de confiança do smooth*
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```
+
+
+**3. What does show.legend = FALSE do? What happens if you remove it? Why do you think I used it earlier in the chapter?**
+   **Resposta : ** remove e legenda, se remoer irá criar uma legenda.
+   
+   
+**4. What does the se argument to geom_smooth() do?**
+
+  **Resposta : ** Habilita ou não o intervalo de confiança no gráfico
+  
+**5. Will these two graphs look different? Why/why not?**
+    **Resposta** : O resultado será o mesmo, mas com informação duplicada
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth()
+
+ggplot() + 
+  geom_point(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_smooth(data = mpg, mapping = aes(x = displ, y = hwy))
+
+```
+
+
+**6. Recreate the R code necessary to generate the following graphs.**
+
+
+
+
+## Referências e Links : 
+
+* [ggplot galery](https://exts.ggplot2.tidyverse.org/gallery/)
 
 
