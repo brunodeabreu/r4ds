@@ -1,0 +1,298 @@
+---
+title: "Estudo R for Data Science - Cap 2"
+author: "Bruno de A. Machado"
+date: "9/20/2020"
+output: html_document
+---
+
+# Visualização de Dados
+
+[R for Data Science](https://r4ds.had.co.nz/index.html)
+
+Neste segundo capítulo os autores nos ensinam como visualizar dados utilizando `ggplot2` e apresenta o conceito de **gramática dos gráficos** e como criar plots em camadas.
+
+Importando o pacote tidyverse para que nos fornece o `ggplot2` entre outros : 
+
+```{r}
+library(tidyverse)
+```
+
+
+## Usando o primeiro gráfico para responder algumas perguntas : 
+
+**1. Carros com motores maiores consomem mais combustível que carros com motores menores ? **
+
+  - `displ` : engine size em litros
+  - `hwy` : eficiencia em miles per gallon (mpg), um carro com baixa eficiencia consome mais combustivel .
+  
+    **Resposta**: Podemos observar essa relação que é de conhecimento comum que carros com menor eficiência com relação a combustível `hwy` tem os maiores motores `displ`
+
+
+**2. Qual o relacionamento entre `engine size (displ)` e `efficience (hwy)`  ? **
+
+  **Resposta**: Relaçao negativa entre as duas variáveis, ou seja, carros com engines maiores são menos eficientes e usam mais combustível
+
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+#### Exercícios 3.2.4: 
+
+**1. Run ggplot(data = mpg). What do you see? **
+
+  **Resposta**: essa primeira parte só monta a área do gráfico
+```{r}
+ggplot(data = mpg)
+```
+
+**2. How many rows are in mpg? How many columns? **
+
+  **Resposta**: O dataframe `mpg` tem 11 colunas e 234 observações ou linhas
+
+```{r}
+ncol(mpg)
+nrow(mpg)
+```
+
+Outra forma de observar é utilizando a função `glimpse()` que oferece além do número de linhas e colunas, tipos das variáveis e exemplos de observações: 
+
+```{r}
+glimpse(mpg)
+```
+
+
+**3. What does the drv variable describe? Read the help for ?mpg to find out. **
+
+  **Resposta**: `drv`: the type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+
+```{r}
+?mpg
+```
+
+
+**4. Make a scatterplot of hwy vs cyl.**
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = hwy, y= cyl))
+
+```
+
+
+**5. What happens if you make a scatterplot of class vs drv? Why is the plot not useful?**
+
+  **Resposta** : Utilizando a função `glimpse` percebemos que `drv e calss` são do tipo `<chr>` que significa categórico, ou seja plotar um scatterplot de dados categóricos não fornece nenhuma informação útil.
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = class, y= drv))
+```
+
+Na documentação do ggplot tem a função `geom_count`, plotando esse gráfico ele nos fornece algumas informações mais interessantes
+
+```{r}
+ggplot(data = mpg, aes(x = class, y = drv))+
+  geom_count()
+```
+
+
+##  **Aesthetic Mapping**
+
+Aesthetic é uma propriedade visual do objeto no plot, podemo adicionar funções que destacam o tamanho, shape ou cor.
+
+Utilizando **aesthetic** `color` mapeando a classe o `ggplot` automaticamente cria uma legenda e atribuiu uma cor específica para cada tipo de classe, processo chamado de **scaling**
+
+```{r}
+ggplot(data = mpg)+
+  geom_point(mapping = aes(x= displ, y= hwy, color=class))
+
+```
+
+Além de `color` podemos utilizar `size`, outras opções são `alpha` e `shape` . 
+
+```{r}
+ggplot(data = mpg)+
+  geom_point(mapping = aes(x= displ, y= hwy, size=class))
+
+```
+
+
+-------------------
+
+
+#### Exercícios 3.3.1:
+
+**1. What’s gone wrong with this code? Why are the points not blue?**
+
+  **Resposta** : `blue` é intepretado como uma variável por isso o ggplot não identificou a cor, para modificar a cor do gráfico pode-se adicionar color fora do `aes`
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
+```
+
+Fix: *Incluindo a cor fora do aes*
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
+```
+
+
+**2. Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?** 
+
+```{r}
+glimpse(mpg)
+
+```
+
+**Categórica :**  manufacturer, model, trans, drv, fl, class
+
+**Contínua : ** displ, year, cyl, cty, hwy
+
+
+
+**3. Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?**
+
+```{r}
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ,  y = hwy, color = displ))
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ,  y = hwy, color = class))
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ,  y = hwy, size = displ))
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ,  y = hwy, shape = fl))
+```
+
+**4. What happens if you map the same variable to multiple aesthetics?**
+
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, colour = hwy, size = displ)) +
+  geom_point()
+
+```
+
+
+**5. What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)**
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ,  y = hwy, stroke =8 ))
+```
+
+
+
+**6. What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ < 5)? Note, you’ll also need to specify x and y.**
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ,  y = hwy, color= displ < 5))
+```
+
+
+## Facet
+
+O autor destaca que outra forma de observar variáveis categóricas é dividir o gráfico em `facet`, ou seja, criar subplots  para cada tipo da variável. A função utilizada é a `facet_wrap()`.
+
+```{r}
+ggplot(data = mpg, aes(x=displ, y=hwy))+
+  geom_point() +
+  facet_wrap(~ class, nrow = 2)
+  
+```
+
+Para combinar duas variáveis com `facet` utilizamos o `facet_grid()`
+
+```{r}
+ggplot(data = mpg)+
+  geom_point(mapping = aes(x = displ , y = hwy)) + 
+  facet_grid(drv ~ cyl)
+  
+```
+
+```{r}
+ggplot(data = mpg)+
+  geom_point(mapping = aes(x = displ , y = hwy)) + 
+  facet_grid(drv ~ .)
+  
+```
+
+--------------------------
+
+#### Exercícios 3.5.1:
+
+**1. What happens if you facet on a continuous variable?**
+
+**Resposta : ** Na minha opinião , não é gráfico muito últil ter uma variável continua no facet, pois ele irá dividir o gráfico em muitas camadas.
+
+```{r}
+ggplot(data = mpg, aes(x=displ, y=hwy))+
+  geom_point() +
+  facet_wrap(~ cty, nrow = 2)
+
+#glimpse(mpg)
+```
+
+**2. What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?**
+
+ **Resposta : **
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl))
+```
+
+
+**3. What plots does the following code make? What does `.` do?**
+
+  **Resposta : ** Define em qual axis e qual variável você quer observar.
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+```
+
+**4. Take the first faceted plot in this section:**
+
+```{r}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+```
+
+**What are the advantages to using faceting instead of the colour aesthetic? What are the disadvantages? How might the balance change if you had a larger dataset?**
+
+  **Resposta : **  A vantagem de usar facet em relação a aes é porque você pode observar cada classe de forma isolada, já com color as cores se misturam e não fica claro cada grupo, outro detalhe é se tivermos muitos grupos/classes complica mais a identificação de cada grupo. Casos de datasets muito grandes ou com diversas classes devemos podemos tentar filtrar por grupos, ou então teremos um facet com muitas camadas, e caso utilize colour não terá cores para todos os tipos.
+
+
+
+**5. Read `?facet_wrap`. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments?**
+
+   **Resposta : ** ncol e nrow especifica o número de colunas ou linhas que irá dividir seu subplot, outras opções para controlar o layout são : scales, shrink.
+
+
+**6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why?**
+
+  **Resposta : ** Para não ter diversas subdivisoes no plot
+
+
+
+## Geometric Objects
+
+
+
+
+
