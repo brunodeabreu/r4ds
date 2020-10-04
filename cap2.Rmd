@@ -1,19 +1,29 @@
 ---
-title: "Estudo R for Data Science - Cap 2"
+title: "Estudo Livro R for Data Science - Cap 2"
 author: "Bruno de A. Machado"
-date: "9/20/2020"
-output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: 
+       highlight: textmate
+       theme: flatly
+       number_sections: yes
+       toc: yes
+       toc_float:
+         collapsed: yes
+         smooth_scroll: no
 --- 
 
 # Visualização de Dados
 
-[R for Data Science](https://r4ds.had.co.nz/index.html)
+**Livro :**[R for Data Science](https://r4ds.had.co.nz/index.html) [^1]
+
+ [^1]: R for Data Science https://r4ds.had.co.nz/index.html
 
 Neste segundo capítulo os autores nos ensinam como visualizar dados utilizando `ggplot2` e apresenta o conceito de **gramática dos gráficos** e como criar plots em camadas.
 
 Importando o pacote tidyverse para que nos fornece o `ggplot2` entre outros : 
 
-```{r}
+```{r , message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
 
@@ -38,18 +48,22 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
-#### Exercícios 3.2.4: 
+### Exercícios 3.2.4 {.tabset .tabset-fade}
 
-**1. Run ggplot(data = mpg). What do you see? **
+#### 
+
+  **Pergunta :**Run ggplot(data = mpg). What do you see?
 
   **Resposta**: essa primeira parte só monta a área do gráfico
 ```{r}
 ggplot(data = mpg)
 ```
 
-**2. How many rows are in mpg? How many columns? **
+#### 
 
-  **Resposta**: O dataframe `mpg` tem 11 colunas e 234 observações ou linhas
+  **Pergunta :** How many rows are in mpg? How many columns?
+
+  **Resposta :** O dataframe `mpg` tem 11 colunas e 234 observações ou linhas
 
 ```{r}
 ncol(mpg)
@@ -63,16 +77,20 @@ glimpse(mpg)
 ```
 
 
-**3. What does the drv variable describe? Read the help for ?mpg to find out. **
+#### 
 
-  **Resposta**: `drv`: the type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+  **Pergunta:** #### What does the drv variable describe? Read the help for ?mpg to find out.
+
+  **Resposta:** `drv`: the type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd
 
 ```{r}
 ?mpg
 ```
 
 
-**4. Make a scatterplot of hwy vs cyl.**
+#### 
+
+  **Pergunta:** Make a scatterplot of hwy vs cyl.
 
 ```{r}
 ggplot(data = mpg) + 
@@ -81,9 +99,11 @@ ggplot(data = mpg) +
 ```
 
 
-**5. What happens if you make a scatterplot of class vs drv? Why is the plot not useful?**
+#### 
 
-  **Resposta** : Utilizando a função `glimpse` percebemos que `drv e calss` são do tipo `<chr>` que significa categórico, ou seja plotar um scatterplot de dados categóricos não fornece nenhuma informação útil.
+  **Pergunta:** What happens if you make a scatterplot of class vs drv? Why is the plot not useful?
+
+  **Resposta:** Utilizando a função `glimpse` percebemos que `drv e calss` são do tipo `<chr>` que significa categórico, ou seja plotar um scatterplot de dados categóricos não fornece nenhuma informação útil.
 
 ```{r}
 ggplot(data = mpg) + 
@@ -98,7 +118,7 @@ ggplot(data = mpg, aes(x = class, y = drv))+
 ```
 
 
-##  **Aesthetic Mapping**
+##  Aesthetic Mapping
 
 Aesthetic é uma propriedade visual do objeto no plot, podemo adicionar funções que destacam o tamanho, shape ou cor.
 
@@ -119,12 +139,13 @@ ggplot(data = mpg)+
 ```
 
 
--------------------
 
 
-#### Exercícios 3.3.1:
+### Exercícios 3.3.1 {.tabset .tabset-fade}
 
-**1. What’s gone wrong with this code? Why are the points not blue?**
+####
+
+  **Pergunta** : What’s gone wrong with this code? Why are the points not blue?
 
   **Resposta** : `blue` é intepretado como uma variável por isso o ggplot não identificou a cor, para modificar a cor do gráfico pode-se adicionar color fora do `aes`
 
@@ -133,15 +154,16 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
 ```
 
-Fix: *Incluindo a cor fora do aes*
+**Fix**: *Incluindo a cor fora do aes*
 
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
 ```
 
+####
 
-**2. Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?** 
+  **Pergunta** : 2. Which variables in mpg are categorical? Which variables are continuous? (Hint: type ?mpg to read the documentation for the dataset). How can you see this information when you run mpg?
 
 ```{r}
 glimpse(mpg)
@@ -153,8 +175,9 @@ glimpse(mpg)
 **Contínua : ** displ, year, cyl, cty, hwy
 
 
+####
 
-**3. Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?**
+  **Pergunta : ** Map a continuous variable to color, size, and shape. How do these aesthetics behave differently for categorical vs. continuous variables?
 
 ```{r}
 
@@ -171,7 +194,10 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ,  y = hwy, shape = fl))
 ```
 
-**4. What happens if you map the same variable to multiple aesthetics?**
+
+####
+
+    **Pergunta :** 4. What happens if you map the same variable to multiple aesthetics?
 
 
 ```{r}
@@ -181,7 +207,9 @@ ggplot(mpg, aes(x = displ, y = hwy, colour = hwy, size = displ)) +
 ```
 
 
-**5. What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)**
+####
+
+  **Pergunta :**5. What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)
 
 ```{r}
 ggplot(data = mpg) + 
@@ -189,13 +217,15 @@ ggplot(data = mpg) +
 ```
 
 
+####
 
-**6. What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ < 5)? Note, you’ll also need to specify x and y.**
+  **Pergunta :** What happens if you map an aesthetic to something other than a variable name, like aes(colour = displ < 5)? Note, you’ll also need to specify x and y.
 
 ```{r}
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ,  y = hwy, color= displ < 5))
 ```
+
 
 
 ## Facet
@@ -225,13 +255,16 @@ ggplot(data = mpg)+
   
 ```
 
---------------------------
 
-#### Exercícios 3.5.1:
 
-**1. What happens if you facet on a continuous variable?**
+### Exercícios 3.5.1 {.tabset .tabset-fade}
 
-**Resposta : ** Na minha opinião , não é gráfico muito últil ter uma variável continua no facet, pois ele irá dividir o gráfico em muitas camadas.
+
+####
+
+  **Pergunta :** 1. What happens if you facet on a continuous variable?
+
+  **Resposta :** Na minha opinião , não é gráfico muito últil ter uma variável continua no facet, pois ele irá dividir o gráfico em muitas camadas.
 
 ```{r}
 ggplot(data = mpg, aes(x=displ, y=hwy))+
@@ -241,9 +274,11 @@ ggplot(data = mpg, aes(x=displ, y=hwy))+
 #glimpse(mpg)
 ```
 
-**2. What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?**
+####
 
- **Resposta : **
+  **Pergunta :** What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean? How do they relate to this plot?
+
+  **Resposta : **
 
 ```{r}
 ggplot(data = mpg) + 
@@ -251,7 +286,9 @@ ggplot(data = mpg) +
 ```
 
 
-**3. What plots does the following code make? What does `.` do?**
+####
+
+  **Pergunta :** What plots does the following code make? What does `.` do?
 
   **Resposta : ** Define em qual axis e qual variável você quer observar.
 
@@ -265,7 +302,10 @@ ggplot(data = mpg) +
   facet_grid(. ~ cyl)
 ```
 
-**4. Take the first faceted plot in this section:**
+
+####
+
+  **Pergunta :**4. Take the first faceted plot in this section:
 
 ```{r}
 ggplot(data = mpg) + 
@@ -278,13 +318,16 @@ ggplot(data = mpg) +
   **Resposta : **  A vantagem de usar facet em relação a aes é porque você pode observar cada classe de forma isolada, já com color as cores se misturam e não fica claro cada grupo, outro detalhe é se tivermos muitos grupos/classes complica mais a identificação de cada grupo. Casos de datasets muito grandes ou com diversas classes devemos podemos tentar filtrar por grupos, ou então teremos um facet com muitas camadas, e caso utilize colour não terá cores para todos os tipos.
 
 
+####
 
-**5. Read `?facet_wrap`. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments?**
+  **Pergunta :** Read `?facet_wrap`. What does nrow do? What does ncol do? What other options control the layout of the individual panels? Why doesn’t facet_grid() have nrow and ncol arguments?**
 
    **Resposta : ** ncol e nrow especifica o número de colunas ou linhas que irá dividir seu subplot, outras opções para controlar o layout são : scales, shrink.
 
 
-**6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why?**
+####
+
+  **Pergunta :**6. When using facet_grid() you should usually put the variable with more unique levels in the columns. Why?**
 
   **Resposta : ** Para não ter diversas subdivisoes no plot
 
@@ -317,6 +360,8 @@ ggplot(data = mpg) +
   geom_smooth(mapping = aes(x = displ, y = hwy , linetype= drv, color = drv))
 
 ```
+
+
 Uma das opções do `geom_smooth` é utilizar as opções de `group` e `color` para plotar variáveis categóricas : 
 
 ```{r}
@@ -360,21 +405,24 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy))+
 ```
 
 
---------------------------
-
-#### Exercícios 3.6.1:
 
 
+### Exercícios 3.6.1 {.tabset .tabset-fade}
 
 
-**1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?**
+####
+
+  **Pergunta : ** What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
  
   **Resposta : ** line chart : geom_line()
                   boxplot : geom_boxplot()
                   histogram: geom_histogram()
                   area chart: geom_area()
+ 
+ 
+####
                   
-**Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.**
+  **Pergunta :**Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.
 
   **Resposta : ** Na parte global irá criar um gráfico com x e y destacando cores por drv, adicionado um scatterplot e um smooth.  *So depois de rodar que identifiquei que o se=FALSE removeu o intervalo de confiança do smooth*
 
@@ -385,16 +433,24 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
 ```
 
 
-**3. What does show.legend = FALSE do? What happens if you remove it? Why do you think I used it earlier in the chapter?**
-   **Resposta : ** remove e legenda, se remoer irá criar uma legenda.
-   
-   
-**4. What does the se argument to geom_smooth() do?**
+####
 
-  **Resposta : ** Habilita ou não o intervalo de confiança no gráfico
+  **Pergunta**What does show.legend = FALSE do? What happens if you remove it? Why do you think I used it earlier in the chapter?
   
-**5. Will these two graphs look different? Why/why not?**
-    **Resposta** : O resultado será o mesmo, mas com informação duplicada
+  **Resposta : ** remove e legenda, se remoer irá criar uma legenda.
+   
+
+####
+
+  **Pergunta :** What does the se argument to geom_smooth() do?
+
+  **Resposta :** Habilita ou não o intervalo de confiança no gráfico
+  
+  
+####
+
+  **Pergunta :**Will these two graphs look different? Why/why not?**
+  **Resposta :**O resultado será o mesmo, mas com informação duplicada
 
 ```{r}
 ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
@@ -407,14 +463,306 @@ ggplot() +
 
 ```
 
+####
 
-**6. Recreate the R code necessary to generate the following graphs.**
+  **Pergunta: **Recreate the R code necessary to generate the following graphs.
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth(se=FALSE)
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, group = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth(se = FALSE)
+
+```
+
+
+## Transformações Estatísticas
+
+Nesta parte do capítulo somos apresentados ao dataset `diamonds` que contém cerca de ~54k informações sobre diamantes, detalhes como preço, cor, claridade, etc.
+
+Utilizando `geom_bar` mapeando o eixo X agrupando pela variável `cut` podemos ver o numéro total de diamantes, como o geom_bar usa `stat_count()`, podemos até usar essa função no lugar `de geom_bar()`.
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut))
+
+```
+Como podemos ver nesse gráfico no eixo X é computado a quantidade por agrupamento, outros gráficos apresentam valores computados como : 
+
+ * Bar chart, histograms and frequêncy compute te counts
+ * smoothers realiza o fit nos dados
+ * boxplots computa a distribuição estatística
+ 
 
 
 
+### Exercícios 3.7.1 {.tabset .tabset-fade}
 
-## Referências e Links : 
+####
+
+  **Pergunta :** 1. What is the default geom associated with stat_summary()? How could you rewrite the previous plot to use that geom function instead of the stat function?
+   
+  **Resposta : ** Verificando a documentação com `?stat_summary()` o default geom é o `geom = "pointrange"`, para sobrescrever podemos usar o parametro `geom`
+   
+   
+####
+
+  **Pergunta :**What does geom_col() do? How is it different to geom_bar()?
+
+  **Resposta :** São os dois gipos de gráficos de barras, a diferença é que usamos `geom_bar` quando queremos o peso das barras proporcional ao numero de casos em cada grupo, já o `geom_col` os pesos representam os valores em dados.
+  
+
+####
+
+  **Pergunta: **Most geoms and stats come in pairs that are almost always used in concert. Read through the documentation and make a list of all the pairs. What do they have in common?
+
+  **Resposta :** A tabela completa esta em [ggplot2 reference](https://ggplot2.tidyverse.org/reference/)
+  
+  geom	stat  
+  * geom_bar()	stat_count()  
+  * geom_bin2d()	stat_bin_2d()  
+  * geom_boxplot()	stat_boxplot()  
+  * geom_contour_filled()	stat_contour_filled()  
+  * geom_contour()	stat_contour()  
+  * geom_count()	stat_sum()  
+  * geom_density_2d()	stat_density_2d()  
+  * geom_density()	stat_density()  
+  * geom_dotplot()	stat_bindot()  
+  * geom_function()	stat_function()  
+  * geom_sf()	stat_sf()  
+  * geom_sf()	stat_sf()  
+  * geom_smooth()	stat_smooth()  
+  * geom_violin()	stat_ydensity()  
+  * geom_hex()	stat_bin_hex()  
+  * geom_qq_line()	stat_qq_line()  
+  * geom_qq()	stat_qq()  
+  * geom_quantile()	  
+
+
+####
+
+  **Pergunta :** What variables does stat_smooth() compute? What parameters control its behaviour?
+
+  **Resposta : ** geom é o parametro que contra os cálculos , `stat_smooth` calcula uma previsão da variável `y` .
+  
+
+####
+
+  **Pergunta :**5. In our proportion bar chart, we need to set group = 1. Why? In other words what is the problem with these two graphs?
+
+  **Resposta:** Se `group=1` não for utilizado todos as barras terão o mesmo tamanho
+  
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = ..prop..))
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = color, y = ..prop..))
+```
+  
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = ..prop.., group = 1))
+
+ggplot(data = diamonds) + 
+  geom_bar(aes(x = cut, y = ..count.. / sum(..count..), fill = color))
+```  
+  
+  
+## Position adjustments
+
+Podemos adicionar cores em barchats utilizando `colour = <variável>` ou `fill = <variável>`, sendo que o comando `fill` é mais útil, poís é mais fácil de ler e identificar as cores e grupos 
+
+
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, colour = cut))
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = cut))
+```
+
+O parâmetro `position` oferece três opções de formatação, sendo "identity", "dodge" ou  "fill".
+
+**identinty**
+
+```{r}
+ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
+  geom_bar(alpha = 1/5, position = "identity")
+```
+
+Para que seja possivel identificar as classes é preciso adicionar um `alpha` para poder ver a sobreposição, apesar de bonito não é muito funcional
+
+**fill**
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
+```
+
+Utilizando `fill` já fica mais fácil identificar cada grupo.
+
+
+**dodge**
+```{r}
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
+```
+Na minha opinião a opção `dodge` é a forma de visualização mais amigável.
+
+
+### Exercícios 3.8.1 {.tabset .tabset-fade}
+
+
+#####
+
+  **Pergunta :** What is the problem with this plot? How could you improve it?
+  
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_point()
+```
+
+  **Resposta :** temos muitos poucos pontos, podemos utilizar a função `position = "jitter"` para mostrar todos os pontos
+  
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) + 
+  geom_point(position = "jitter")
+```
+
+
+####
+
+  **Pergunta :** What parameters to geom_jitter() control the amount of jittering?
+
+  **Resposta :** `geom_jitter` é um *shortcut* de `geom_point(position="jitter")` que controla ` width` e `height`
+  
+  
+####
+
+  **Pergunta :** Compare and contrast geom_jitter() with geom_count().
+
+```{r}
+ggplot(data = mpg , mapping = aes(x = cty, y = hwy)) +
+  geom_jitter() +
+  ggtitle("Gráfico com geom_jitter()")
+
+
+
+ggplot(data = mpg , mapping = aes(x = cty, y = hwy)) +
+  geom_count()+
+  ggtitle("Gráfico com geom_count()")
+```
+
+####
+
+  **Pergunta :** What’s the default position adjustment for geom_boxplot()? Create a visualisation of the mpg dataset that demonstrates it.
+  
+  **Resposta :** Verificando o help a position default é o `position = "dodge2"`, adicionando class podemos observar o comportamento.
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = drv, y = hwy, colour = class))+
+  geom_boxplot()
+
+
+```
+
+
+
+## Coordinate systems
+
+  Utilizando para manipular os eixos X e Y com a função :  
+    
+    * `coord_flip()` : que troca o eixo X pelo Y  
+    * `coord_quickmap()` : manipula ratios dos mapas
+    * `coord_polar()` : manipulação de coordenadas
+    
+    
+
+### Exercícios 3.9.1 {.tabset .tabset-fade}
+
+
+#### 
+
+  **Pergunta :** Turn a stacked bar chart into a pie chart using coord_polar().
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = cyl, fill=drv))+
+  geom_bar()+
+  coord_polar()
+```
+
+  
+####
+
+  **Pergunta :**What does labs() do? Read the documentation.
+  **Resposta : ** Modifica axis, legenda e labels
+  
+```{r}
+ggplot(data = mpg, mapping = aes(x = class, y = hwy)) +
+  geom_boxplot() +
+  coord_flip() +
+  labs(y = "Highway MPG",
+       x = "Class",
+       title = "Highway MPG by car class",
+       subtitle = "1999-2008",
+       caption = "Source: http://fueleconomy.gov")
+
+```
+
+####
+
+  **Pergunta :** What’s the difference between coord_quickmap() and coord_map()?
+
+  **Resposta :** Basicamente definem a forma de projeção do mapa
+  
+  
+####
+
+  **Pergunta :** What does the plot below tell you about the relationship between city and highway mpg? Why is coord_fixed() important? What does geom_abline() do?
+  
+  **Resposta :** O gráfico abaixo nos mostra o relacionamento entre as duas variáveis e o `coord_fixed` ajusta o ratio dos eixos X,Y, a função `geom_abline()` adiciona uma linha de referência ao plot, facilitando a analise.
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point() + 
+  geom_abline() +
+  coord_fixed()
+```
+  
+
+##  The layered grammar of graphics
+
+Basicamente temos 7 parâmetros para criar um plot e são tratados em camadas utilizando a gramática dos gráficos:
+
+```{}
+ggplot(data = <DATA>) + 
+  <GEOM_FUNCTION>(
+     mapping = aes(<MAPPINGS>),
+     stat = <STAT>, 
+     position = <POSITION>
+  ) +
+  <COORDINATE_FUNCTION> +
+  <FACET_FUNCTION>
+```
+
+
+
+## Referências e Links 
 
 * [ggplot galery](https://exts.ggplot2.tidyverse.org/gallery/)
-
+* [ggplo2 tidyverse](https://ggplot2.tidyverse.org/reference/)
+* [R for Data Science Book](https://r4ds.had.co.nz/data-visualisation.html)
+* [r-bloggers.com](http://www.r-bloggers.com)
+* [Happy git with R](https://happygitwithr.com/rstudio-git-github.html)
+* [RStudio Community](https://community.rstudio.com/)
 

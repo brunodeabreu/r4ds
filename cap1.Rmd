@@ -1,20 +1,26 @@
 ---
-title: "Estudo R for Data Science - Cap 1"
+title: "Estudo Livro R for Data Science - Cap 1"
 author: "Bruno de A. Machado"
-date: "9/19/2020"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
-  html_document: default
-  pdf_document: default
+  html_document: 
+       highlight: textmate
+       theme: flatly
+       number_sections: yes
+       toc: yes
+       toc_float:
+         collapsed: yes
+         smooth_scroll: no
 ---
 # Estudo Livro R for Data Science
 
-[R for Data Science](https://r4ds.had.co.nz/index.html)
+**Livro : **[R for Data Science](https://r4ds.had.co.nz/index.html)
 
 
 *R for Data Science* livro de *Garrett Grolemund* e *Hadley Wickham* ensina as mais importantes ferramentas em R, após este estudo o ciêntista de dados terá uma variedade de ferramentas, técnias para desafios em ciência de dados usando R   
 
 
-## Instaland os primeiros pacotes
+# Instaland os primeiros pacotes
 
 No primeiro capítulo do livro instalamos o *Tidyverse* e outros pacotes que serão utilizados no livro *R for Data Science*, ao carregar o pacote ele nos oferece algumas informações : 
 
@@ -30,14 +36,14 @@ library(tidyverse)
 
 Ao carregar o `tidyverse` ele nos mostra os pacotes e versões, além de mostrar os conflitos com funções nativos do R ou de outros pacotes, neste caso para utilizar a função específica utilizamos `::` como mostra no exemplo `dplyr::filter()`
 
-## Explorando o primeiro dataframe `mpg` e verificando a estrutura:
+# Explorando o primeiro dataframe `mpg` e verificando a estrutura:
 
 ```{r}
 mpg
 ```
 
 
-## Primeiro plot
+# Primeiro plot
 
 O pacote utilizado para visualização é o `ggplot` que adota a estrutura de camadas para as plotagens, ou seja, é possivel incluir camadas e mais camadas nos plots, abaixo um `scatterplot` entre as variáveis `displ` no eixo X e `hwy` no eixo Y e para isso é adicionada a camada `geom_plot` ao `ggplot`: 
 
@@ -46,7 +52,7 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
-## References : :
+# Referências
 * [R for Data Science Book](https://r4ds.had.co.nz/data-visualisation.html)
 * [r-bloggers.com](http://www.r-bloggers.com)
 * [Happy git with R](https://happygitwithr.com/rstudio-git-github.html)
