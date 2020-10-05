@@ -1,0 +1,110 @@
+---
+title: "Estudo Livro R for Data Science - Cap 4"
+author: "Bruno de A. Machado"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document: 
+       highlight: textmate
+       theme: flatly
+       number_sections: yes
+       toc: yes
+       toc_float:
+         collapsed: yes
+         smooth_scroll: no
+--- 
+
+# Workflow : Basics
+
+## Básico de código:
+
+R como calculadora, além de funções básicas temos funções como Seno `sin(pi/2)` , para criar novos objetos é utilizado o `<-`.
+
+```{r}
+1 / 200 * 30
+(59 + 73 + 2) / 3
+
+# Função seno : 
+sin(pi / 2)
+
+# Criando novo objeto
+x <- 3 * 4
+```
+
+
+Com relação a nomeclatura de objetos, estes precisam iniciar com letras (*case sensitive*) e só pode conter `letras`, `números`, `_` e `.` e é recomendado a estrutura de **snake_case**  utilizando `_` como por exemplo : `i_use_snake_case`.
+
+
+R tem uma grande quantidade de funções próprias como `sin`e  `seq` , entre outros, abaixo exemplo da função `seq`
+
+```{r}
+seq(1, 10)
+```
+
+
+### Exercícios 4.4 {.tabset .tabset-fade}
+
+#### 
+
+  **Pergunta :** Why does this code not work?
+  
+```{r}
+my_variable <- 10
+#my_varıable
+```
+
+  **Resposta :** a letra `i` da segunda linha esta com um caracter estranho.
+  
+  
+  
+#### 
+
+  **Pergunta :** Tweak each of the following R commands so that they run correctly:
+
+```{}
+library(tidyverse)
+
+ggplot(dota = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+fliter(mpg, cyl = 8)
+filter(diamond, carat > 3)
+```
+  
+  **Resposta :** 
+    * Typo : dota em vez de data
+    * fliter : em vez de filter
+    * sinal de igualdade : ==
+    * dataset se chama diamonds, faltando um s, abaixo correção
+
+```{r}
+library(tidyverse)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
+
+filter(mpg, cyl == 8)
+filter(diamonds, carat > 3)
+```
+
+
+
+#### 
+
+  **Pergunta :** Press Alt + Shift + K. What happens? How can you get to the same place using the menus?
+
+
+  **Resposta :** Lista de shortcuts, um muito util `Ctrl+Alt+I` para incluir um chunk de r :)
+  
+
+
+## Referências e Links 
+
+* [ggplot galery](https://exts.ggplot2.tidyverse.org/gallery/)
+* [ggplo2 tidyverse](https://ggplot2.tidyverse.org/reference/)
+* [R for Data Science Book](https://r4ds.had.co.nz/data-visualisation.html)
+* [r-bloggers.com](http://www.r-bloggers.com)
+* [Happy git with R](https://happygitwithr.com/rstudio-git-github.html)
+* [RStudio Community](https://community.rstudio.com/)
+
+  
+  

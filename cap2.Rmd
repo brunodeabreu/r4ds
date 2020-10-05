@@ -1,5 +1,5 @@
 ---
-title: "Estudo Livro R for Data Science - Cap 2"
+title: "Estudo Livro R for Data Science - Cap 2 & 3"
 author: "Bruno de A. Machado"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
