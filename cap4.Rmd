@@ -97,6 +97,228 @@ filter(diamonds, carat > 3)
   
 
 
+## Comandos , funções e alguns conceitos básicos
+
+* Saber o diretório :
+```{r}
+getwd()
+
+```
+
+* Alterar o diretório
+```{r}
+setwd('/home/bruno/Documents/github/')
+getwd()
+```
+* Retornando o diretõrio
+```{r}
+setwd('/home/bruno/Documents/github/r4ds')
+getwd()
+```
+
+* Saber a classe do objeto, retorna a classe do objeto
+```{r}
+class(iris)
+```
+
+* Salvar e ler objetos
+
+```{r}
+save(iris, file='iris.Rdata')
+
+#load(file='iris.Rdata')
+
+```
+
+* **Plots genéricos**
+  - plot()
+  - hist()
+  - boxplot()
+
+
+
+* **Tipos de Dados**
+  - Caractere
+  - Numérico
+  - Inteiro
+  - Fator (vetor de texto ordenado)
+
+
+
+* **Variável**
+  - x <- 9 : Número Real
+  - x <- 9L  : `L` força o R a criar variável do tipo inteiro
+  - Lógico : TRUE, FALSE ou T, F
+  - caractere <- "texto"  # ou 'Texto'
+
+
+* **Vetores**
+  - x <- c(5,6,7,8)  *`c` para criar um vetor*
+  - x[1] : irá ler a primeira posição número 5
+  - x[1] <- 10 *altera o vetor na posição 1*
+  
+  
+* **Data Frame**
+  - Semelhante a matrizes, porém permite tipos diferentes de dados
+  - Duas dimensões
+  - Sintaxe para acessar uma coluna: `dataframe$coluna`
+
+  
+```{r}
+# Carregando um DataFrame
+longley
+
+# Filtrando todas as linhas e colunas 1 e 3
+longley[, 1:3]
+
+# Filtrando linhas 1 a 4, colunas 1 a 3
+longley[1:4, 1:3]
+
+# Acessando uma coluna com $
+longley$Unemployed
+
+# Acessando uma coluna com []
+longley['Unemployed']
+
+```
+
+
+* **Listas**
+  - N objetos, em sequência, de classes diferentes
+  
+Acessando a lista `ability.cov`
+
+```{r}
+ability.cov
+
+# Acessando objetos da lista
+ability.cov$cov
+
+# Acessando seg elemento
+ability.cov$center
+
+# Acessando elementos dentro da lista, todas as linhas colunas 1 a 3
+ability.cov$cov[, 1:3]
+
+```
+
+  
+* **Fatores**
+  - Variáveis categóricas
+  - Podem ser ordenados, permite ordenação
+
+Exemplo de fatores : 
+```{r}
+state.region
+
+levels(state.region)
+```
+
+  
+* **Matrizes**
+  - Duas dimensões *linhas e colunas*
+  - Permite um único tipo de dado
+  - Para ler a matrix : `x[linhas, coluna]`
+
+
+Carrendo um dataframe `VADeaths`
+```{r}
+VADeaths
+
+# Lendo as colunas
+colnames(VADeaths)
+
+# Lendo as linhas
+rownames(VADeaths)
+```
+
+Slice
+
+```{r}
+
+# Retornando uma coluna  
+VADeaths[, 1]
+
+# Retornando uma linha
+VADeaths[1, ]
+
+
+# Filtrando linha 1 até 3
+VADeaths[1:3, ]
+
+```
+
+
+
+
+
+
+* **Funções**
+  - Pode ou nao requerer parâmetros
+  - exemplo :   `>getwd()`  , `>head(iris)`
+
+
+```{r}
+
+# Retornando dir que estou trabalhando
+getwd()
+
+# Verificando função sd, podemos ver estrutura (código) somente chamando a função :
+sd
+
+
+```
+
+  
+
+* **Pacotes populares**:
+  - Dplyr   : manipulação de dados
+  - Devtools: criação de pacotes
+  - Foreing : importar dados de outras ferramentas `SAS, SPSS`, etc
+  - Ggplot2 : visualização
+
+
+Instalando pacote : 
+```{r}
+install.packages("e1071")
+```
+
+Lendo pacote
+```{r}
+library(e1071)
+```
+
+Descarregar pacote da memória:
+```{r}
+detach("package:e1071", unload = TRUE)
+```
+
+Remove pacote *desinstalar o pacote*
+```{r}
+#remove.packages("e1071")
+```
+
+
+
+
+* **Importação de dados**
+   - read.csv
+   - Planilhas Excel : 
+      - read.xlsx
+   - Foreign : 
+      - read.arff() : importar da Weka
+   - Banco de dados *Pacotes ODBC*
+      - odbcDriverConnect()
+      - sqlQuery()
+      - odbcClose()
+
+
+
+
+
+
+
+
 ## Referências e Links 
 
 * [ggplot galery](https://exts.ggplot2.tidyverse.org/gallery/)
@@ -105,6 +327,8 @@ filter(diamonds, carat > 3)
 * [r-bloggers.com](http://www.r-bloggers.com)
 * [Happy git with R](https://happygitwithr.com/rstudio-git-github.html)
 * [RStudio Community](https://community.rstudio.com/)
+* [Cran-r](https://cran.r-project.org/mirrors.html)
+* [Cran task views](https://cran.r-project.org/web/views/#:~:text=CRAN%20Task%20Views.%20CRAN%20task%20views%20aim%20to,can%20be%20automatically%20installed%20using%20the%20ctv%20package.)
 
   
   

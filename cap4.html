@@ -1527,7 +1527,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Estudo Livro R for Data Science - Cap 4</h1>
 <h4 class="author">Bruno de A. Machado</h4>
-<h4 class="date">05 October, 2020</h4>
+<h4 class="date">07 November, 2020</h4>
 
 </div>
 
@@ -1571,12 +1571,12 @@ fliter(mpg, cyl = 8)
 filter(diamond, carat &gt; 3)</code></pre>
 <p><strong>Resposta :</strong> * Typo : dota em vez de data * fliter : em vez de filter * sinal de igualdade : == * dataset se chama diamonds, faltando um s, abaixo correção</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ── Attaching packages ────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
 ## ✓ tibble  3.0.1     ✓ dplyr   1.0.0
 ## ✓ tidyr   1.1.0     ✓ stringr 1.4.0
 ## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ───────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>ggplot(data = mpg) + 
@@ -1619,6 +1619,310 @@ filter(diamond, carat &gt; 3)</code></pre>
 <p><strong>Resposta :</strong> Lista de shortcuts, um muito util <code>Ctrl+Alt+I</code> para incluir um chunk de r :)</p>
 </div>
 </div>
+</div>
+<div id="comandos-funções-e-alguns-conceitos-básicos" class="section level2">
+<h2><span class="header-section-number">1.2</span> Comandos , funções e alguns conceitos básicos</h2>
+<ul>
+<li>Saber o diretório :</li>
+</ul>
+<pre class="r"><code>getwd()</code></pre>
+<pre><code>## [1] &quot;/home/bruno/Documents/github/r4ds&quot;</code></pre>
+<ul>
+<li>Alterar o diretório</li>
+</ul>
+<pre class="r"><code>setwd(&#39;/home/bruno/Documents/github/&#39;)
+getwd()</code></pre>
+<pre><code>## [1] &quot;/home/bruno/Documents/github&quot;</code></pre>
+<ul>
+<li>Retornando o diretõrio</li>
+</ul>
+<pre class="r"><code>setwd(&#39;/home/bruno/Documents/github/r4ds&#39;)
+getwd()</code></pre>
+<pre><code>## [1] &quot;/home/bruno/Documents/github/r4ds&quot;</code></pre>
+<ul>
+<li>Saber a classe do objeto, retorna a classe do objeto</li>
+</ul>
+<pre class="r"><code>class(iris)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<ul>
+<li>Salvar e ler objetos</li>
+</ul>
+<pre class="r"><code>save(iris, file=&#39;iris.Rdata&#39;)
+
+#load(file=&#39;iris.Rdata&#39;)</code></pre>
+<ul>
+<li><strong>Plots genéricos</strong>
+<ul>
+<li>plot()</li>
+<li>hist()</li>
+<li>boxplot()</li>
+</ul></li>
+<li><strong>Tipos de Dados</strong>
+<ul>
+<li>Caractere</li>
+<li>Numérico</li>
+<li>Inteiro</li>
+<li>Fator (vetor de texto ordenado)</li>
+</ul></li>
+<li><strong>Variável</strong>
+<ul>
+<li>x &lt;- 9 : Número Real</li>
+<li>x &lt;- 9L : <code>L</code> força o R a criar variável do tipo inteiro</li>
+<li>Lógico : TRUE, FALSE ou T, F</li>
+<li>caractere &lt;- “texto” # ou ‘Texto’</li>
+</ul></li>
+<li><strong>Vetores</strong>
+<ul>
+<li>x &lt;- c(5,6,7,8) <em><code>c</code> para criar um vetor</em></li>
+<li>x[1] : irá ler a primeira posição número 5</li>
+<li>x[1] &lt;- 10 <em>altera o vetor na posição 1</em></li>
+</ul></li>
+<li><strong>Data Frame</strong>
+<ul>
+<li>Semelhante a matrizes, porém permite tipos diferentes de dados</li>
+<li>Duas dimensões</li>
+<li>Sintaxe para acessar uma coluna: <code>dataframe$coluna</code></li>
+</ul></li>
+</ul>
+<pre class="r"><code># Carregando um DataFrame
+longley</code></pre>
+<pre><code>##      GNP.deflator     GNP Unemployed Armed.Forces Population Year Employed
+## 1947         83.0 234.289      235.6        159.0    107.608 1947   60.323
+## 1948         88.5 259.426      232.5        145.6    108.632 1948   61.122
+## 1949         88.2 258.054      368.2        161.6    109.773 1949   60.171
+## 1950         89.5 284.599      335.1        165.0    110.929 1950   61.187
+## 1951         96.2 328.975      209.9        309.9    112.075 1951   63.221
+## 1952         98.1 346.999      193.2        359.4    113.270 1952   63.639
+## 1953         99.0 365.385      187.0        354.7    115.094 1953   64.989
+## 1954        100.0 363.112      357.8        335.0    116.219 1954   63.761
+## 1955        101.2 397.469      290.4        304.8    117.388 1955   66.019
+## 1956        104.6 419.180      282.2        285.7    118.734 1956   67.857
+## 1957        108.4 442.769      293.6        279.8    120.445 1957   68.169
+## 1958        110.8 444.546      468.1        263.7    121.950 1958   66.513
+## 1959        112.6 482.704      381.3        255.2    123.366 1959   68.655
+## 1960        114.2 502.601      393.1        251.4    125.368 1960   69.564
+## 1961        115.7 518.173      480.6        257.2    127.852 1961   69.331
+## 1962        116.9 554.894      400.7        282.7    130.081 1962   70.551</code></pre>
+<pre class="r"><code># Filtrando todas as linhas e colunas 1 e 3
+longley[, 1:3]</code></pre>
+<pre><code>##      GNP.deflator     GNP Unemployed
+## 1947         83.0 234.289      235.6
+## 1948         88.5 259.426      232.5
+## 1949         88.2 258.054      368.2
+## 1950         89.5 284.599      335.1
+## 1951         96.2 328.975      209.9
+## 1952         98.1 346.999      193.2
+## 1953         99.0 365.385      187.0
+## 1954        100.0 363.112      357.8
+## 1955        101.2 397.469      290.4
+## 1956        104.6 419.180      282.2
+## 1957        108.4 442.769      293.6
+## 1958        110.8 444.546      468.1
+## 1959        112.6 482.704      381.3
+## 1960        114.2 502.601      393.1
+## 1961        115.7 518.173      480.6
+## 1962        116.9 554.894      400.7</code></pre>
+<pre class="r"><code># Filtrando linhas 1 a 4, colunas 1 a 3
+longley[1:4, 1:3]</code></pre>
+<pre><code>##      GNP.deflator     GNP Unemployed
+## 1947         83.0 234.289      235.6
+## 1948         88.5 259.426      232.5
+## 1949         88.2 258.054      368.2
+## 1950         89.5 284.599      335.1</code></pre>
+<pre class="r"><code># Acessando uma coluna com $
+longley$Unemployed</code></pre>
+<pre><code>##  [1] 235.6 232.5 368.2 335.1 209.9 193.2 187.0 357.8 290.4 282.2 293.6 468.1
+## [13] 381.3 393.1 480.6 400.7</code></pre>
+<pre class="r"><code># Acessando uma coluna com []
+longley[&#39;Unemployed&#39;]</code></pre>
+<pre><code>##      Unemployed
+## 1947      235.6
+## 1948      232.5
+## 1949      368.2
+## 1950      335.1
+## 1951      209.9
+## 1952      193.2
+## 1953      187.0
+## 1954      357.8
+## 1955      290.4
+## 1956      282.2
+## 1957      293.6
+## 1958      468.1
+## 1959      381.3
+## 1960      393.1
+## 1961      480.6
+## 1962      400.7</code></pre>
+<ul>
+<li><strong>Listas</strong>
+<ul>
+<li>N objetos, em sequência, de classes diferentes</li>
+</ul></li>
+</ul>
+<p>Acessando a lista <code>ability.cov</code></p>
+<pre class="r"><code>ability.cov</code></pre>
+<pre><code>## $cov
+##         general picture  blocks   maze reading   vocab
+## general  24.641   5.991  33.520  6.023  20.755  29.701
+## picture   5.991   6.700  18.137  1.782   4.936   7.204
+## blocks   33.520  18.137 149.831 19.424  31.430  50.753
+## maze      6.023   1.782  19.424 12.711   4.757   9.075
+## reading  20.755   4.936  31.430  4.757  52.604  66.762
+## vocab    29.701   7.204  50.753  9.075  66.762 135.292
+## 
+## $center
+## [1] 0 0 0 0 0 0
+## 
+## $n.obs
+## [1] 112</code></pre>
+<pre class="r"><code># Acessando objetos da lista
+ability.cov$cov</code></pre>
+<pre><code>##         general picture  blocks   maze reading   vocab
+## general  24.641   5.991  33.520  6.023  20.755  29.701
+## picture   5.991   6.700  18.137  1.782   4.936   7.204
+## blocks   33.520  18.137 149.831 19.424  31.430  50.753
+## maze      6.023   1.782  19.424 12.711   4.757   9.075
+## reading  20.755   4.936  31.430  4.757  52.604  66.762
+## vocab    29.701   7.204  50.753  9.075  66.762 135.292</code></pre>
+<pre class="r"><code># Acessando seg elemento
+ability.cov$center</code></pre>
+<pre><code>## [1] 0 0 0 0 0 0</code></pre>
+<pre class="r"><code># Acessando elementos dentro da lista, todas as linhas colunas 1 a 3
+ability.cov$cov[, 1:3]</code></pre>
+<pre><code>##         general picture  blocks
+## general  24.641   5.991  33.520
+## picture   5.991   6.700  18.137
+## blocks   33.520  18.137 149.831
+## maze      6.023   1.782  19.424
+## reading  20.755   4.936  31.430
+## vocab    29.701   7.204  50.753</code></pre>
+<ul>
+<li><strong>Fatores</strong>
+<ul>
+<li>Variáveis categóricas</li>
+<li>Podem ser ordenados, permite ordenação</li>
+</ul></li>
+</ul>
+<p>Exemplo de fatores :</p>
+<pre class="r"><code>state.region</code></pre>
+<pre><code>##  [1] South         West          West          South         West         
+##  [6] West          Northeast     South         South         South        
+## [11] West          West          North Central North Central North Central
+## [16] North Central South         South         Northeast     South        
+## [21] Northeast     North Central North Central South         North Central
+## [26] West          North Central West          Northeast     Northeast    
+## [31] West          Northeast     South         North Central North Central
+## [36] South         West          Northeast     Northeast     South        
+## [41] North Central South         South         West          Northeast    
+## [46] South         West          South         North Central West         
+## Levels: Northeast South North Central West</code></pre>
+<pre class="r"><code>levels(state.region)</code></pre>
+<pre><code>## [1] &quot;Northeast&quot;     &quot;South&quot;         &quot;North Central&quot; &quot;West&quot;</code></pre>
+<ul>
+<li><strong>Matrizes</strong>
+<ul>
+<li>Duas dimensões <em>linhas e colunas</em></li>
+<li>Permite um único tipo de dado</li>
+<li>Para ler a matrix : <code>x[linhas, coluna]</code></li>
+</ul></li>
+</ul>
+<p>Carrendo um dataframe <code>VADeaths</code></p>
+<pre class="r"><code>VADeaths</code></pre>
+<pre><code>##       Rural Male Rural Female Urban Male Urban Female
+## 50-54       11.7          8.7       15.4          8.4
+## 55-59       18.1         11.7       24.3         13.6
+## 60-64       26.9         20.3       37.0         19.3
+## 65-69       41.0         30.9       54.6         35.1
+## 70-74       66.0         54.3       71.1         50.0</code></pre>
+<pre class="r"><code># Lendo as colunas
+colnames(VADeaths)</code></pre>
+<pre><code>## [1] &quot;Rural Male&quot;   &quot;Rural Female&quot; &quot;Urban Male&quot;   &quot;Urban Female&quot;</code></pre>
+<pre class="r"><code># Lendo as linhas
+rownames(VADeaths)</code></pre>
+<pre><code>## [1] &quot;50-54&quot; &quot;55-59&quot; &quot;60-64&quot; &quot;65-69&quot; &quot;70-74&quot;</code></pre>
+<p>Slice</p>
+<pre class="r"><code># Retornando uma coluna  
+VADeaths[, 1]</code></pre>
+<pre><code>## 50-54 55-59 60-64 65-69 70-74 
+##  11.7  18.1  26.9  41.0  66.0</code></pre>
+<pre class="r"><code># Retornando uma linha
+VADeaths[1, ]</code></pre>
+<pre><code>##   Rural Male Rural Female   Urban Male Urban Female 
+##         11.7          8.7         15.4          8.4</code></pre>
+<pre class="r"><code># Filtrando linha 1 até 3
+VADeaths[1:3, ]</code></pre>
+<pre><code>##       Rural Male Rural Female Urban Male Urban Female
+## 50-54       11.7          8.7       15.4          8.4
+## 55-59       18.1         11.7       24.3         13.6
+## 60-64       26.9         20.3       37.0         19.3</code></pre>
+<ul>
+<li><strong>Funções</strong>
+<ul>
+<li>Pode ou nao requerer parâmetros</li>
+<li>exemplo : <code>&gt;getwd()</code> , <code>&gt;head(iris)</code></li>
+</ul></li>
+</ul>
+<pre class="r"><code># Retornando dir que estou trabalhando
+getwd()</code></pre>
+<pre><code>## [1] &quot;/home/bruno/Documents/github/r4ds&quot;</code></pre>
+<pre class="r"><code># Verificando função sd, podemos ver estrutura (código) somente chamando a função :
+sd</code></pre>
+<pre><code>## function (x, na.rm = FALSE) 
+## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
+##     na.rm = na.rm))
+## &lt;bytecode: 0x5642cdf96510&gt;
+## &lt;environment: namespace:stats&gt;</code></pre>
+<ul>
+<li><strong>Pacotes populares</strong>:
+<ul>
+<li>Dplyr : manipulação de dados</li>
+<li>Devtools: criação de pacotes</li>
+<li>Foreing : importar dados de outras ferramentas <code>SAS, SPSS</code>, etc</li>
+<li>Ggplot2 : visualização</li>
+</ul></li>
+</ul>
+<p>Instalando pacote :</p>
+<pre class="r"><code>install.packages(&quot;e1071&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/home/bruno/R/x86_64-pc-linux-gnu-library/4.0&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<p>Lendo pacote</p>
+<pre class="r"><code>library(e1071)</code></pre>
+<p>Descarregar pacote da memória:</p>
+<pre class="r"><code>detach(&quot;package:e1071&quot;, unload = TRUE)</code></pre>
+<p>Remove pacote <em>desinstalar o pacote</em></p>
+<pre class="r"><code>#remove.packages(&quot;e1071&quot;)</code></pre>
+<ul>
+<li><strong>Importação de dados</strong>
+<ul>
+<li>read.csv</li>
+<li>Planilhas Excel :
+<ul>
+<li>read.xlsx</li>
+</ul></li>
+<li>Foreign :
+<ul>
+<li>read.arff() : importar da Weka</li>
+</ul></li>
+<li>Banco de dados <em>Pacotes ODBC</em>
+<ul>
+<li>odbcDriverConnect()</li>
+<li>sqlQuery()</li>
+<li>odbcClose()</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="referências-e-links" class="section level2">
+<h2><span class="header-section-number">1.3</span> Referências e Links</h2>
+<ul>
+<li><a href="https://exts.ggplot2.tidyverse.org/gallery/">ggplot galery</a></li>
+<li><a href="https://ggplot2.tidyverse.org/reference/">ggplo2 tidyverse</a></li>
+<li><a href="https://r4ds.had.co.nz/data-visualisation.html">R for Data Science Book</a></li>
+<li><a href="http://www.r-bloggers.com">r-bloggers.com</a></li>
+<li><a href="https://happygitwithr.com/rstudio-git-github.html">Happy git with R</a></li>
+<li><a href="https://community.rstudio.com/">RStudio Community</a></li>
+<li><a href="https://cran.r-project.org/mirrors.html">Cran-r</a></li>
+<li><a href="https://cran.r-project.org/web/views/#:~:text=CRAN%20Task%20Views.%20CRAN%20task%20views%20aim%20to,can%20be%20automatically%20installed%20using%20the%20ctv%20package.">Cran task views</a></li>
+</ul>
 </div>
 </div>
 
